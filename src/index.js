@@ -11,7 +11,9 @@ const app = express();
 
 // Third-Party Middleware
 
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
 // Built-In Middleware
 
@@ -33,6 +35,7 @@ app.use((req, res, next) => {
 app.use('/session', routes.session);
 app.use('/users', routes.user);
 app.use('/messages', routes.message);
+app.use('/slack', routes.slack);
 
 // * Start * //
 
