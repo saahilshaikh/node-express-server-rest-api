@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/saveTeamInfo', (req, res) => {
   const { team_id, org_id } = req.body;
-
+  console.log(team_id, org_id);
   return res.send({ team_id, org_id });
 });
 
