@@ -12,13 +12,14 @@ router.post('/saveTeamInfo', (req, res) => {
 });
 
 router.post('/event', (req, res) => {
-  const { challenge } = req.body;
+  const { challenge, event: { channel } } = req.body;
   console.log('Slack event: ', req.body);
-  sendMessage(process.env.DUMMY_MESSAGE, 'C07U3DW9J0J');
+  sendMessage(process.env.DUMMY_MESSAGE, channel);
   return res.send({ challenge });
 });
 
 async function sendMessage(message, channel_id) {
+  console.log('Sending message to Slack channel: ', channel_id);
   let payload = {
     text: message,
     channel: channel_id,
