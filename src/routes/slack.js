@@ -35,7 +35,7 @@ async function sendMessage(message, channel_id) {
       payload,
       config,
     );
-    console.log('Paragon response: ', response);
+    console.log('Slack message sent successfully.');
     return { status: true, data: response.data };
   } catch (error) {
     console.log('Error sending message to Slack!');
