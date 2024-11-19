@@ -3,14 +3,16 @@ import axios from 'axios';
 
 const router = Router();
 
+// connect raya to slack
 router.post('/saveTeamInfo', (req, res) => {
-  const { team_id, org_id } = req.body;
+  const { slack_team_id, org_id } = req.body;
   console.log(
-    `Slack send team info trigger: team_id: ${team_id}, org_id: ${org_id}`,
+    `Slack send team info trigger: slack_team_id: ${slack_team_id}, org_id: ${org_id}`,
   );
-  return res.send({ team_id, org_id });
+  return res.send({ slack_team_id, org_id });
 });
 
+// slack event listener
 router.post('/event', (req, res) => {
   const { challenge, event: { channel } } = req.body;
   console.log('Slack event: ', req.body);
@@ -18,6 +20,8 @@ router.post('/event', (req, res) => {
   return res.send({ challenge });
 });
 
+
+// send message to slack channel
 async function sendMessage(message, channel_id) {
   console.log('Sending message to Slack channel: ', channel_id);
   let payload = {
@@ -42,6 +46,13 @@ async function sendMessage(message, channel_id) {
     console.log('Error sending message to Slack!');
     return { status: false, error: error };
   }
-}
+};
+
+// disconnect raya from slack
+router.post('/disconnect', (req, res) => {
+  const { org_id } = req.body;
+  console.log(`Slack disconnect trigger for org_id: ${org_id}`);
+  return res.send({ org_id });
+});
 
 export default router;
