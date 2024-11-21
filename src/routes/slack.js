@@ -12,6 +12,12 @@ router.post('/saveTeamInfo', (req, res) => {
   return res.send({ slack_team_id, org_id });
 });
 
+// slack command listener
+router.post('/command', (req, res) => {
+  console.log('Slack command: ', req.body);
+  return res.send({ status: true });
+});
+
 // slack event listener
 router.post('/event', (req, res) => {
   const { challenge, event: { channel } } = req.body;
