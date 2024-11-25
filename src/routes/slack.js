@@ -15,7 +15,11 @@ router.post('/saveTeamInfo', (req, res) => {
 // slack command listener
 router.post('/command', (req, res) => {
   console.log('Slack command: ', req.body);
-  return res.send({ status: true });
+  let message = {
+    "response_type": "in_channel",
+    "text": process.env.DUMMY_MESSAGE,
+  }
+  return res.send({ message });
 });
 
 // slack event listener
