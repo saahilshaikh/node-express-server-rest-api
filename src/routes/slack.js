@@ -17,7 +17,7 @@ router.post('/command', (req, res) => {
   console.log('Slack command: ', req.body);
   const { response_url } = req.body;
   sendCommandMessage(response_url);
-  return res.send();
+  return res.send({ "response_type": "in_channel" });
 });
 
 async function sendCommandMessage(response_url) {
