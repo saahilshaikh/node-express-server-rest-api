@@ -15,26 +15,28 @@ router.post('/saveTeamInfo', (req, res) => {
 // slack command listener
 router.post('/command', (req, res) => {
   console.log('Slack command: ', req.body);
-  let message = {
-    "blocks": [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "*It's 80 degrees right now.*"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "Partly cloudy today and tomorrow"
-        }
-      }
-    ]
-  }
-  return res.send({ message });
+  const { response_url } = req.body;
+  sendCommandMessage(response_url);
+  return res.send();
 });
+
+async function sendCommandMessage(response_url) {
+  try {
+    const payload = {
+      "response_type": "in_channel",
+      "text": process.env.DUMMY_MESSAGE,
+    };
+    const response = await axios.post(
+      response_url,
+      payload,
+    );
+    console.log('Command message sent successfully.');
+    return { status: true, data: response.data };
+  } catch (error) {
+    console.log('Error sending command message to Slack!');
+    return { status: false, error: error };
+  }
+}
 
 // slack event listener
 router.post('/event', (req, res) => {
