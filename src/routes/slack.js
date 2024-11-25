@@ -16,8 +16,22 @@ router.post('/saveTeamInfo', (req, res) => {
 router.post('/command', (req, res) => {
   console.log('Slack command: ', req.body);
   let message = {
-    "response_type": "in_channel",
-    "text": process.env.DUMMY_MESSAGE,
+    "blocks": [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*It's 80 degrees right now.*"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "Partly cloudy today and tomorrow"
+        }
+      }
+    ]
   }
   return res.send({ message });
 });
