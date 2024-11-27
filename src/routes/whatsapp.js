@@ -48,10 +48,10 @@ async function sendMessage(message, to) {
       payload,
       config,
     );
-    console.log('Slack message sent successfully.');
+    console.log('Whatsapp message sent successfully.');
     return { status: true, data: response.data };
   } catch (error) {
-    console.log('Error sending message to Slack!');
+    console.log('Error sending whatsapp message!');
     return { status: false, error: error };
   }
 };
