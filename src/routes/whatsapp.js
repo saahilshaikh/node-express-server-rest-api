@@ -19,7 +19,7 @@ router.get('/webhook', (req, res) => {
 // webhook for whatsapp message
 router.post('/webhook', (req, res) => {
   console.log('POST--->', JSON.stringify(req.body));
-  const to = req.body?.entry?.changes[0]?.value?.messages[0]?.from;
+  const to = req.body?.entry[0]?.changes[0]?.value?.messages[0]?.from;
   setTimeout(() => {
     sendMessage(process.env.DUMMY_MESSAGE, to);
   }, 1000);
