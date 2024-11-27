@@ -8,7 +8,7 @@ router.get('/webhook', (req, res) => {
   console.log('GET--->', JSON.stringify(req.body));
   if (
     req.query['hub.mode'] == 'subscribe' &&
-    req.query['hub.verify_token'] == 'UKTOB.AI'
+    req.query['hub.verify_token'] == process.env.META_VERIFY_TOKEN
   ) {
     res.send(req.query['hub.challenge']);
   } else {
