@@ -36,7 +36,7 @@ async function sendCommandMessage(response_url) {
     console.log('Error sending command message to Slack!');
     return { status: false, error: error };
   }
-}
+};
 
 // slack event listener
 router.post('/event', (req, res) => {
