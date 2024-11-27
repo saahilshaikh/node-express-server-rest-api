@@ -13,7 +13,7 @@ router.post('/saveTeamInfo', (req, res) => {
 });
 
 // slack command listener
-router.post('/command', (req, res) => {
+router.post('/command', async (req, res) => {
   console.log('Slack command: ', req.body);
   const { response_url } = req.body;
   res.send({ "response_type": "in_channel" });

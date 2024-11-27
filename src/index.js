@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 
 // * Routes * //
 app.use('/slack', routes.slack);
+app.use('/whatsapp', routes.whatsapp);
 
 // * Start * //
 
