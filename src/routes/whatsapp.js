@@ -20,7 +20,8 @@ router.get('/webhook', (req, res) => {
 router.post('/webhook', (req, res) => {
   console.log('POST--->', JSON.stringify(req.body));
   const from = req.body?.entry[0]?.changes[0]?.value?.metadata?.phone_number_id;
-  const to = req.body?.entry[0]?.changes[0]?.value?.messages[0]?.to;
+  const to = req.body?.entry[0]?.changes[0]?.value?.messages[0]?.from;
+  const message = req.body?.entry[0]?.changes[0]?.value?.messages[0]?.text?.body;
   setTimeout(() => {
     sendMessage(process.env.DUMMY_MESSAGE, to, from);
   }, 1000);

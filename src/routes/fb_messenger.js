@@ -21,6 +21,7 @@ router.post('/webhook', (req, res) => {
   console.log('POST--->', JSON.stringify(req.body));
   const to = req.body?.entry[0]?.messaging[0]?.sender?.id;
   const pageId = req.body?.entry[0]?.id;
+  const message = req.body?.entry[0]?.messaging[0]?.message?.text;
   setTimeout(() => {
     sendMessage(process.env.DUMMY_MESSAGE, to, pageId);
   }, 1000);
