@@ -19,15 +19,16 @@ router.get('/webhook', (req, res) => {
 // webhook for whatsapp message
 router.post('/webhook', (req, res) => {
   console.log('POST--->', JSON.stringify(req.body));
-  const to = req.body?.entry[0]?.changes[0]?.value?.messages[0]?.from;
+  const from = req.body?.entry[0]?.changes[0]?.value?.metadata?.phone_number_id;
+  const to = req.body?.entry[0]?.changes[0]?.value?.messages[0]?.to;
   setTimeout(() => {
-    sendMessage(process.env.DUMMY_MESSAGE, to);
+    sendMessage(process.env.DUMMY_MESSAGE, to, from);
   }, 1000);
   res.sendStatus(200);
 });
 
 // send message to whatsapp
-async function sendMessage(message, to) {
+async function sendMessage(message, to, from) {
   console.log('Sending whatsapp message to: ', to);
   let payload = {
     "messaging_product": "whatsapp",
@@ -45,7 +46,7 @@ async function sendMessage(message, to) {
 
   try {
     const response = await axios.post(
-      `https://graph.facebook.com/v${process.env.WHATSAPP_API_VERSION}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      `https://graph.facebook.com/v${process.env.WHATSAPP_API_VERSION}/${from}/messages`,
       payload,
       config,
     );
