@@ -5,7 +5,8 @@ const router = Router();
 
 // webhook for whatsapp message
 router.get('/webhook', (req, res) => {
-  console.log('GET--->', JSON.stringify(req.body));
+  console.log('Whatsapp GET BODY--->', JSON.stringify(req.body));
+  console.log('Whatsapp GET QUERY--->', JSON.stringify(req.query));
   if (
     req.query['hub.mode'] == 'subscribe' &&
     req.query['hub.verify_token'] == process.env.META_VERIFY_TOKEN
