@@ -23,9 +23,12 @@ router.post('/webhook', (req, res) => {
   const to = req.body?.entry[0]?.messaging[0]?.sender?.id;
   const instagramAccountId = req.body?.entry[0]?.id;
   const message = req.body?.entry[0]?.messaging[0]?.message?.text;
-  setTimeout(() => {
+  const isEchoMessage = Boolean(req.body?.entry[0]?.messaging[0]?.message?.is_echo)
+  if (!isEchoMessage) {
     sendMessage(process.env.DUMMY_MESSAGE, to, instagramAccountId);
-  }, 1000);
+  } else {
+    console.log('Message echo triggered!');
+  }
   res.sendStatus(200);
 });
 
