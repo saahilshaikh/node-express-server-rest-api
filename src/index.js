@@ -35,6 +35,7 @@ app.use('/slack', routes.slack);
 app.use('/whatsapp', routes.whatsapp);
 app.use('/fb_messenger', routes.fb_messenger);
 app.use('/health', routes.health);
+app.use('/instagram_messenger', routes.instagram_messenger);
 
 // * Start * //
 
