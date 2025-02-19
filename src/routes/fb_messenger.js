@@ -5,7 +5,8 @@ const router = Router();
 
 // webhook for fb messenger
 router.get('/webhook', (req, res) => {
-  console.log('GET--->', JSON.stringify(req.body));
+  console.log('FB GET BODY--->', JSON.stringify(req.body));
+  console.log('FB GET QUERY--->', JSON.stringify(req.query));
   if (
     req.query['hub.mode'] == 'subscribe' &&
     req.query['hub.verify_token'] == process.env.META_VERIFY_TOKEN

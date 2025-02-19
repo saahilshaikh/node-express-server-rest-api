@@ -5,8 +5,8 @@ const router = Router();
 
 // webhook for instagram messenger
 router.get('/webhook', (req, res) => {
-  console.log('GET--->', JSON.stringify(req.body));
-  console.log('GET--->', JSON.stringify(req.query));
+  console.log('IG GET BODY--->', JSON.stringify(req.body));
+  console.log('IG GET QUERY--->', JSON.stringify(req.query));
   if (
     req.query['hub.mode'] == 'subscribe' &&
     req.query['hub.verify_token'] == process.env.META_VERIFY_TOKEN
