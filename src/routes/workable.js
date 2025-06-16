@@ -63,14 +63,21 @@ router.post('/create_listener', (req, res) => {
             res.status(200).json(response.data);
         })
         .catch(error => {
-            res.status(error.status).json({ error: 'Failed to fetch stages' });
+            console.log('Error---->', error);
+            res.status(error.status).json({ error: 'Failed to create listener' });
         });
 });
 
-// * Trigger Listener * //
-router.post('/trigger_listener', (req, res) => {
-    console.log('Listener triggered---->', JSON.stringify(req.body));
-    res.status(200).json({ message: 'Listener triggered', data: req.body });
+// * Candidate Created Listener * //
+router.post('/listener/candidate_created', (req, res) => {
+    console.log('Candidate created listener triggered---->', JSON.stringify(req.body));
+    res.status(200).json({ message: 'Candidate created listener triggered', data: req.body });
+});
+
+// * Candidate Moved Listener * //
+router.post('/listener/candidate_moved', (req, res) => {
+    console.log('Candidate moved listener triggered---->', JSON.stringify(req.body));
+    res.status(200).json({ message: 'Candidate moved listener triggered', data: req.body });
 });
 
 // * Listener * //
