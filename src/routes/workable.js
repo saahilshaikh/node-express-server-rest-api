@@ -35,6 +35,21 @@ router.get('/candidates', (req, res) => {
         });
 });
 
+// * Candidate Details * //
+router.get('/candidates/:id', (req, res) => {
+    axios.get(`https://${process.env.WORKABLE_SUB_DOMAIN}.workable.com/spi/v3/candidates/${req.params.id}`, {
+        headers: {
+            'Authorization': `Bearer ${process.env.WORKABLE_API_KEY}`
+        },
+    })
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(error => {
+            res.status(error.status).json({ error: 'Failed to fetch stages' });
+        });
+});
+
 // * Jobs * //
 router.get('/jobs', (req, res) => {
     axios.get(`https://${process.env.WORKABLE_SUB_DOMAIN}.workable.com/spi/v3/jobs`, {
@@ -42,6 +57,21 @@ router.get('/jobs', (req, res) => {
             'Authorization': `Bearer ${process.env.WORKABLE_API_KEY}`
         },
         params: req.query
+    })
+        .then(response => {
+            res.status(200).json(response.data);
+        })
+        .catch(error => {
+            res.status(error.status).json({ error: 'Failed to fetch stages' });
+        });
+});
+
+// * Job Details * //
+router.get('/jobs/:shortcode', (req, res) => {
+    axios.get(`https://${process.env.WORKABLE_SUB_DOMAIN}.workable.com/spi/v3/jobs/${req.params.shortcode}`, {
+        headers: {
+            'Authorization': `Bearer ${process.env.WORKABLE_API_KEY}`
+        },
     })
         .then(response => {
             res.status(200).json(response.data);
