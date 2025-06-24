@@ -4,6 +4,7 @@ import fb_messenger from './fb_messenger';
 import health from './health';
 import instagram_messenger from './instagram_messenger';
 import workable from './workable';
+import zapier from './zapier';
 
 export default {
   health,
@@ -11,5 +12,6 @@ export default {
   whatsapp,
   fb_messenger,
   instagram_messenger,
-  workable
+  workable,
+  zapier
 };

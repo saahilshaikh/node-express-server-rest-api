@@ -52,7 +52,7 @@ router.get('/candidates/:id', (req, res) => {
 
 // * Jobs * //
 router.get('/jobs', (req, res) => {
-    axios.get(`https://${process.env.WORKABLE_SUB_DOMAIN}.workable.com/spi/v3/jobs`, {
+    axios.get(`https://${process.env.WORKABLE_SUB_DOMAIN}.workable.com/spi/v3/jobs?limit=100`, {
         headers: {
             'Authorization': `Bearer ${process.env.WORKABLE_API_KEY}`
         },
