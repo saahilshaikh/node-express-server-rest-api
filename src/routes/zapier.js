@@ -23,9 +23,14 @@ router.post('/create_job', (req, res) => {
 
 router.get('/get_org_jobs', (req, res) => {
     console.log(JSON.stringify(req.headers));
-    axios.get(`https://api.dev.workforce.uktob.ai/v1/jobs?org_id=223c3ae0-9905-4968-8e85-28fd046790f5&page=1&limit=100`)
+    console.log(JSON.stringify(req.query));
+    const page = Number(req.query.page) || 0;
+    const limit = Number(req.query.limit) || 10;
+    axios.get(`https://api.dev.workforce.uktob.ai/v1/jobs?org_id=223c3ae0-9905-4968-8e85-28fd046790f5&page=${page + 1}&limit=${limit}`)
         .then(response => {
-            res.status(200).json(response.data);
+            console.log(response.data.total_records);
+            const jobs = response?.data?.jobs || [];
+            res.status(200).json(jobs);
         })
         .catch(error => {
             res.status(error.status).json({ error: 'Failed to fetch stages' });
