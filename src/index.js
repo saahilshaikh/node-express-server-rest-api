@@ -39,6 +39,12 @@ app.use('/instagram_messenger', routes.instagram_messenger);
 app.use('/workable', routes.workable);
 app.use('/zapier', routes.zapier);
 
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Hello from the other side!',
+  });
+});
+
 // * Start * //
 
 app.listen(process.env.PORT, () =>
