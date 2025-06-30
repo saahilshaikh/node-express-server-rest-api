@@ -41,8 +41,8 @@ router.post('/create_job_linked_interview', (req, res) => {
     console.log(JSON.stringify(req.headers));
     console.log(JSON.stringify(req.body));
     res.status(200).json({
+        id: Date.now().toString(36) + Math.random().toString(36).substring(2),
         status: 'success',
-        timestamp: new Date().toISOString()
     });
 });
 
