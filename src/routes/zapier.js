@@ -46,4 +46,58 @@ router.post('/create_job_linked_interview', (req, res) => {
     });
 });
 
+router.get('/dropdown_options', (req, res) => {
+    const { key } = req.query;
+    const dropdownOptions = {
+        location: [
+            { name: 'Remote', value: 1 },
+            { name: 'Hybrid', value: 2 },
+            { name: 'Onsite', value: 3 },
+        ],
+        employmentType: [
+            { name: 'Full Time', value: 1 },
+            { name: 'Part Time', value: 2 },
+            { name: 'Contract', value: 3 },
+            { name: 'Freelance', value: 4 },
+        ],
+        experience: [
+            { name: 'Entry Level', value: 1 },
+            { name: 'Mid Level', value: 2 },
+            { name: 'Senior Level', value: 3 },
+            { name: 'Lead', value: 4 },
+            { name: 'Manager', value: 5 },
+            { name: 'Director', value: 6 },
+            { name: 'Executive', value: 7 },
+        ],
+        desiredStartDate: [
+            { name: 'ASAP (less than 7 days)', value: 1 },
+            { name: 'Soon (7-15 days)', value: 2 },
+            { name: 'Later (15+ days)', value: 3 },
+        ],
+        communicationStylePreference: [
+            { name: 'Strong verbal & written communication skills essential', value: 1 },
+            { name: 'Written communication prioritized for async collaboration', value: 2 },
+        ],
+        currency: [
+            { name: '$', value: 1 },
+            { name: '€', value: 2 },
+            { name: '£', value: 3 },
+            { name: 'C$', value: 4 },
+            { name: 'A$', value: 5 },
+            { name: '₹', value: 6 },
+            { name: '₽', value: 7 },
+            { name: 'R$', value: 8 },
+        ],
+        period: [
+            { name: 'Hourly', value: 1 },
+            { name: 'Daily', value: 2 },
+            { name: 'Weekly', value: 3 },
+            { name: 'Monthly', value: 4 },
+            { name: 'Yearly', value: 5 },
+        ],
+    };
+
+    res.status(200).json(dropdownOptions[key] || []);
+});
+
 export default router;
