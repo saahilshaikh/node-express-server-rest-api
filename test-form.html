@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormData Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-section {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin: 10px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>FormData API Testing</h1>
+
+    <div class="form-section">
+        <h2>Test Simple Form Data (No Files)</h2>
+        <form id="simpleForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category">
+                    <option value="">Select a category</option>
+                    <option value="general">General</option>
+                    <option value="support">Support</option>
+                    <option value="feedback">Feedback</option>
+                </select>
+            </div>
+            <button type="submit">Submit Simple Form</button>
+        </form>
+        <div id="simpleResponse" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="form-section">
+        <h2>Test FormData with Files</h2>
+        <form id="fileForm">
+            <div class="form-group">
+                <label for="file_name">Name:</label>
+                <input type="text" id="file_name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="file_email">Email:</label>
+                <input type="email" id="file_email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="resume">Resume (PDF/DOC):</label>
+                <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
+            </div>
+            <div class="form-group">
+                <label for="photo">Photo:</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="file_message">Additional Notes:</label>
+                <textarea id="file_message" name="message" rows="4"></textarea>
+            </div>
+            <button type="submit">Submit with Files</button>
+        </form>
+        <div id="fileResponse" class="response" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Test simple form
+        document.getElementById('simpleForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch('/interview/test_form', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                const responseDiv = document.getElementById('simpleResponse');
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('simpleResponse').textContent = 'Error: ' + error.message;
+            }
+        });
+
+        // Test form with files
+        document.getElementById('fileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch('/interview/submit_interview', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                const responseDiv = document.getElementById('fileResponse');
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('fileResponse').textContent = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+
+</html>
