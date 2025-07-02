@@ -38,6 +38,7 @@ app.use('/health', routes.health);
 app.use('/instagram_messenger', routes.instagram_messenger);
 app.use('/workable', routes.workable);
 app.use('/zapier', routes.zapier);
+app.use('/interview', routes.interview);
 
 app.get('/', (req, res) => {
   res.status(200).json({

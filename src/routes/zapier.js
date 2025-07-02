@@ -100,4 +100,24 @@ router.get('/dropdown_options', (req, res) => {
     res.status(200).json(dropdownOptions[key] || []);
 });
 
+router.get('/interview-info', (req, res) => {
+    console.log(JSON.stringify(req.headers));
+    console.log(JSON.stringify(req.query));
+    res.status(200).json([
+        {
+            "id": "ea226531-ce84-4666-834e-1e5ae730ca9f",
+            "name": "Dummy Standalone Interview",
+            "interview_type": "standalone",
+            "status": "Completed",
+            "candidate_name": "Ahmaduddin Shaikh",
+            "candidate_email": "saahil@teammates.ai",
+            "duration_minutes": 10,
+            "scheduled_date": "2013-07-25T00:00:00",
+            "interview_evaluation_date": null,
+            "interview_score": null,
+            "report_link": "https://local.app.teammates.ai/report/ea226531-ce84-4666-834e-1e5ae730ca9f"
+        }
+    ]);
+});
+
 export default router;
