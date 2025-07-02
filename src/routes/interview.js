@@ -74,6 +74,17 @@ router.post('/submit_interview', upload.any(), (req, res) => {
             console.log(`  MIME Type: ${file.mimetype}`);
             console.log(`  Size: ${file.size} bytes`);
             console.log(`  Buffer Length: ${file.buffer ? file.buffer.length : 'No buffer'}`);
+
+            // Check if this might be a blob
+            if (file.originalname === 'blob' || file.originalname.startsWith('blob:')) {
+                console.log(`  *** DETECTED AS BLOB ***`);
+                console.log(`  Blob Type: ${file.mimetype}`);
+            }
+
+            // Log first few bytes for debugging (if it's a small file)
+            if (file.buffer && file.buffer.length < 100) {
+                console.log(`  First bytes: ${file.buffer.toString('hex').substring(0, 50)}...`);
+            }
         });
     } else {
         console.log('No files found');

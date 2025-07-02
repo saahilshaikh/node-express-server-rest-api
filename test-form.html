@@ -125,7 +125,70 @@
         <div id="fileResponse" class="response" style="display: none;"></div>
     </div>
 
+    <div class="form-section">
+        <h2>Test Blob Uploads</h2>
+        <form id="blobForm">
+            <div class="form-group">
+                <label for="blob_name">Name:</label>
+                <input type="text" id="blob_name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="blob_email">Email:</label>
+                <input type="email" id="blob_email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Generated Blob (Text):</label>
+                <button type="button" id="createTextBlob">Create Text Blob</button>
+                <span id="textBlobStatus"></span>
+            </div>
+            <div class="form-group">
+                <label>Generated Blob (Canvas Image):</label>
+                <button type="button" id="createCanvasBlob">Create Canvas Blob</button>
+                <canvas id="testCanvas" width="200" height="100"
+                    style="border: 1px solid #ccc; display: block; margin: 10px 0;"></canvas>
+                <span id="canvasBlobStatus"></span>
+            </div>
+            <div class="form-group">
+                <label for="blob_message">Notes:</label>
+                <textarea id="blob_message" name="message" rows="3"></textarea>
+            </div>
+            <button type="submit">Submit with Blobs</button>
+        </form>
+        <div id="blobResponse" class="response" style="display: none;"></div>
+    </div>
+
     <script>
+        // Global variables to store created blobs
+        let textBlob = null;
+        let canvasBlob = null;
+
+        // Create text blob
+        document.getElementById('createTextBlob').addEventListener('click', () => {
+            const text = `Generated text blob at ${new Date().toISOString()}\nThis is a test blob created programmatically.`;
+            textBlob = new Blob([text], { type: 'text/plain' });
+            document.getElementById('textBlobStatus').textContent = `✓ Created text blob (${textBlob.size} bytes)`;
+        });
+
+        // Create canvas blob
+        document.getElementById('createCanvasBlob').addEventListener('click', () => {
+            const canvas = document.getElementById('testCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Draw something on canvas
+            ctx.fillStyle = '#007bff';
+            ctx.fillRect(0, 0, 200, 100);
+            ctx.fillStyle = 'white';
+            ctx.font = '16px Arial';
+            ctx.fillText('Canvas Blob Test', 20, 50);
+            ctx.fillText(new Date().toLocaleTimeString(), 20, 80);
+
+            // Convert canvas to blob
+            canvas.toBlob((blob) => {
+                canvasBlob = blob;
+                document.getElementById('canvasBlobStatus').textContent = `✓ Created canvas blob (${blob.size} bytes, ${blob.type})`;
+            }, 'image/png');
+        });
+
         // Test simple form
         document.getElementById('simpleForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -165,6 +228,37 @@
             } catch (error) {
                 console.error('Error:', error);
                 document.getElementById('fileResponse').textContent = 'Error: ' + error.message;
+            }
+        });
+
+        // Test form with blobs
+        document.getElementById('blobForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            // Add text blob if created
+            if (textBlob) {
+                formData.append('textBlob', textBlob, 'generated-text.txt');
+            }
+
+            // Add canvas blob if created
+            if (canvasBlob) {
+                formData.append('canvasBlob', canvasBlob, 'canvas-image.png');
+            }
+
+            try {
+                const response = await fetch('/interview/submit_interview', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                const responseDiv = document.getElementById('blobResponse');
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('blobResponse').textContent = 'Error: ' + error.message;
             }
         });
     </script>
