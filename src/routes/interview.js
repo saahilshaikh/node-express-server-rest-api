@@ -58,7 +58,7 @@ router.post('/submit_interview', upload.any(), (req, res) => {
     console.log('\n--- FORM FIELDS ---');
     if (req.body && Object.keys(req.body).length > 0) {
         Object.keys(req.body).forEach(key => {
-            console.log(`${key}:`, req.body[key]);
+            console.log(`${key}:`, JSON.stringify(req.body[key]));
         });
     } else {
         console.log('No form fields found');
